@@ -1,4 +1,22 @@
-function Home() {
+import { useEffect } from "react";
+
+
+const Home=() =>{
+    
+    useEffect(()=>{
+        if(!document.querySelector("script[src='/js/script_main.js']")){
+            const sc = document.createElement("script")
+            sc.src = "/js/script_main.js"
+            sc.async = true
+            document.body.appendChild(sc)
+            console.log("script cargado")
+        }else{
+            console.log("script no cargado")
+
+        }
+    })
+
+
     const handleSubscribe = (e) => {
         e.preventDefault();
         alert('¡Gracias por suscribirte!');
