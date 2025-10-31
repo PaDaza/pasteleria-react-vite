@@ -123,3 +123,42 @@ document.addEventListener("DOMContentLoaded", () => {
     prefillLogin();
     mostrarBienvenidaSiCorresponde();
 });
+
+
+// ======== DESTACADOS (HOME) ========
+window.renderDestacados = function () {
+    const cont = document.getElementById("destacados");
+    if (!cont || !window.PRODUCTOS) return;
+
+    const ids = [1, 2, 3, 4]; // IDs de productos destacados
+    cont.innerHTML = ids
+        .map((id) => {
+            const p = window.PRODUCTOS[id];
+            if (!p) return "";
+            return `
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <img src="/${p.imagen}" class="card-img-top" alt="${p.nombre}">
+                        <div class="card-body text-center">
+                            <h6 class="card-title mb-1">${p.nombre}</h6>
+                            <p class="fw-bold mb-2">
+                                ${new Intl.NumberFormat("es-CL", {
+                                    style: "currency",
+                                    currency: "CLP",
+                                    maximumFractionDigits: 0,
+                                }).format(p.precio)}
+                            </p>
+                        </div>
+                    </div>
+                </div>`;
+        })
+        .join("");
+};
+
+// Ejecutar automáticamente al cargar la página de inicio
+window.addEventListener("DOMContentLoaded", () => {
+    const path = window.location.pathname;
+    if (path.endsWith("/") || path.endsWith("index.html") || path.endsWith("/home")) {
+        window.renderDestacados();
+    }
+});

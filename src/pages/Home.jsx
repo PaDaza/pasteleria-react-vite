@@ -1,20 +1,35 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 
-const Home=() =>{
-    
-    useEffect(()=>{
-        if(!document.querySelector("script[src='/js/script_main.js']")){
+const Home = () => {
+
+    useEffect(() => {
+        if (!document.querySelector("script[src='/js/script_main.js']")) {
             const sc = document.createElement("script")
             sc.src = "/js/script_main.js"
             sc.async = true
             document.body.appendChild(sc)
             console.log("script cargado")
-        }else{
+        } else {
             console.log("script no cargado")
 
         }
     })
+
+    useEffect(() => {
+        const existing = document.querySelector("script[src='/js/script_main.js']");
+        if (!existing) {
+            const sc = document.createElement("script");
+            sc.src = "/js/script_main.js";
+            sc.async = true;
+            sc.onload = () => window.renderDestacados && window.renderDestacados();
+            document.body.appendChild(sc);
+        } else {
+            window.renderDestacados && window.renderDestacados();
+        }
+    }, []);
+
 
 
     const handleSubscribe = (e) => {
@@ -81,9 +96,9 @@ const Home=() =>{
             <section className="mb-4">
                 <div className="d-flex align-items-center justify-content-between mb-2">
                     <h3 className="m-0">Destacados</h3>
-                    <a href="galeria.html" className="btn btn-outline-primary">
+                    <Link to="/catalogo" className="btn btn-outline-primary">
                         Ver catálogo
-                    </a>
+                    </Link>
                 </div>
                 <div className="row" id="destacados"></div>
             </section>
@@ -155,6 +170,21 @@ const Home=() =>{
                     </form>
                 </div>
             </section>
+
+            {/*<section>
+                <h1>Rutas con useLocation</h1>
+                <ul>
+                    <li>
+                        <link to="/productos">ver todos los productos</link>
+                    </li>
+                    <li>
+                        <link to="/productos?categoria=torta">Categoria Torta</link>
+                    </li>
+                    <li>
+                        <link to="productos?categoria=pastel">Categoria Pastel</link>
+                    </li>
+                </ul>
+            </section>*/}
         </main>
     );
 }

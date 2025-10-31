@@ -1,12 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
+import { addToCart } from "../utils/cart";
 
 function Catalogo() {
     const [listo, setListo] = useState(false);
     const [productos, setProductos] = useState([]);
     const [categorias, setCategorias] = useState(["all"]);
     const [filtro, setFiltro] = useState("all");
+    const [agregadoId, setAgregadoId] = useState(null);
+    const timerRef = useRef(null);
 
-    // Asegura que /js/script_main.js esté cargado (como haces en Home)
     useEffect(() => {
         const existing = document.querySelector("script[src='/js/script_main.js']");
         if (existing) {
@@ -21,22 +23,44 @@ function Catalogo() {
     }, []);
 
     function hydrateFromWindow() {
-        // Lee los datos globales
         const prods = window.PRODUCTOS ? Object.values(window.PRODUCTOS) : [];
-        setProductos(prods);
-        setCategorias(Array.isArray(window.CATEGORIAS) ? window.CATEGORIAS : ["all", ...new Set(prods.map(p => p.cat))]);
+        // Normaliza rutas de imagen y asegura descripción
+        const normalizados = prods.map((p) => ({
+            ...p,
+            imagen: p.imagen?.startsWith("/") ? p.imagen : `/${p.imagen || ""}`,
+            descripcion:
+                p.descripcion ||
+                "Producto artesanal de Pastelería Mil Sabores, hecho con ingredientes frescos.",
+        }));
+        setProductos(normalizados);
+
+        const cats = Array.isArray(window.CATEGORIAS)
+            ? window.CATEGORIAS
+            : ["all", ...new Set(prods.map((p) => p.cat))];
+        setCategorias(cats);
         setListo(true);
     }
 
     const productosFiltrados = useMemo(() => {
         if (filtro === "all") return productos;
-        return productos.filter(p => p.cat === filtro);
+        return productos.filter((p) => p.cat === filtro);
     }, [productos, filtro]);
 
+    const formatoCLP = (v) =>
+        new Intl.NumberFormat("es-CL", {
+            style: "currency",
+            currency: "CLP",
+            maximumFractionDigits: 0,
+        }).format(v);
+
     const agregar = (p) => {
-        // Aquí podrás conectar con localStorage/carrito
-        alert(`Agregado: ${p.nombre} (${p.codigo})`);
+        addToCart(p, 1);
+        setAgregadoId(p.id);
+        clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => setAgregadoId(null), 1200);
     };
+
+    useEffect(() => () => clearTimeout(timerRef.current), []);
 
     if (!listo) {
         return (
@@ -67,7 +91,9 @@ function Catalogo() {
 
             {/* Mensaje vacío */}
             {productosFiltrados.length === 0 && (
-                <p id="msgVacio" className="text-center text-muted">No hay productos en esta categoría.</p>
+                <p id="msgVacio" className="text-center text-muted">
+                    No hay productos en esta categoría.
+                </p>
             )}
 
             {/* Grid */}
@@ -77,19 +103,28 @@ function Catalogo() {
                         <div className="card h-100 shadow-sm">
                             <img
                                 className="card-img-top"
-                                src={`/${p.imagen}`}   // asegura /public/img/...
+                                src={p.imagen}
                                 alt={p.nombre}
                                 style={{ objectFit: "cover", height: 250 }}
                             />
-                            <div className="card-body text-center d-flex flex-column">
+                            <div className="card-body d-flex flex-column text-center">
+                                {/* Categoría como badge sutil */}
+                                {p.cat && (
+                                    <div className="mb-2">
+                                        <span className="badge">{p.cat}</span>
+                                    </div>
+                                )}
                                 <h5 className="card-title">{p.nombre}</h5>
+                                <p className="text-muted small mb-2">{p.descripcion}</p>
                                 <p className="card-text fw-bold mb-3">
-                                    {window.formatoCLP
-                                        ? window.formatoCLP(p.precio)
-                                        : new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 }).format(p.precio)}
+                                    {window.formatoCLP ? window.formatoCLP(p.precio) : formatoCLP(p.precio)}
                                 </p>
-                                <button className="btn btn-custom mt-auto" onClick={() => agregar(p)}>
-                                    Agregar
+
+                                <button
+                                    className={`btn btn-custom mt-auto ${agregadoId === p.id ? "disabled" : ""}`}
+                                    onClick={() => agregar(p)}
+                                >
+                                    {agregadoId === p.id ? "Agregado ✓" : "Agregar"}
                                 </button>
                             </div>
                         </div>
