@@ -1,0 +1,386 @@
+/* ===== 🎨 Guía Visual de Pastelería Mil Sabores ===== */
+
+/* Variables de colores */
+:root {
+  --color-fondo: #FFF5E1;
+  --color-acento-rosa: #FFC0CB;
+  --color-acento-choco: #8B4513;
+  --color-texto: #5D4037;
+  --color-secundario: #B0BEC5;
+}
+
+/* ===== Tipografías y cuerpo ===== */
+html, body {
+  background-color: var(--color-fondo);
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  color: var(--color-texto);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Encabezados */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Pacifico', cursive;
+  color: var(--color-acento-choco);
+  margin-top: 1rem;
+}
+
+/* Texto secundario */
+.small-text, .descripcion, footer p {
+  color: var(--color-secundario);
+}
+
+/* ===== NAVBAR ===== */
+.my-navbar {
+  background-color: var(--color-acento-choco) !important;
+}
+
+.my-navbar .navbar-brand {
+  color: var(--color-acento-rosa) !important;
+  font-family: 'Pacifico', cursive;
+  font-size: 1.4rem;
+}
+
+.my-navbar .nav-link {
+  color: #fff !important;
+  font-weight: 700;
+  padding: .45rem .85rem;
+  border-radius: .6rem;
+  margin-right: .35rem;
+  transition: all 0.2s ease;
+}
+
+.my-navbar .nav-link:hover {
+  color: var(--color-acento-rosa) !important;
+}
+
+.my-navbar .nav-link.active {
+  background-color: #ffd9004d; /* dorado translúcido */
+  color: #fff !important;
+}
+
+/* Botones derecha del navbar */
+.btn-sesion,
+.btn-carrito {
+  border: none;
+  font-weight: 700;
+  border-radius: .6rem;
+  padding: .45rem .85rem;
+}
+
+.btn-sesion {
+  background-color: #d2a21a; /* dorado */
+  color: #fff;
+}
+
+.btn-sesion:hover {
+  filter: brightness(0.95);
+}
+
+.btn-carrito {
+  background-color: #ffd9004d;
+  color: #fff;
+}
+
+.btn-carrito:hover {
+  color: var(--color-acento-rosa);
+}
+
+/* ===== Main y secciones ===== */
+main {
+  padding: 20px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;  /* centra todo el contenido */
+  background-color: var(--color-fondo);
+}
+
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ===== Catálogo de productos ===== */
+.pastel {
+  width: 150px;
+  height: 200px;
+  border: solid 2px var(--color-acento-rosa);
+  margin: 10px auto 20px;
+  display: block;
+  border-radius: 8px;
+}
+
+.pastel:hover {
+  opacity: .7;
+  transform: scale(1.02);
+  transition: all .3s ease;
+}
+
+.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ficha {
+  margin: 15px;
+  border: solid 2px var(--color-acento-choco);
+  border-radius: 8px;
+  text-align: center;
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,.1);
+}
+
+.ficha h5 {
+  margin: 10px 0;
+  color: var(--color-acento-choco);
+}
+
+.ficha h3 {
+  color: var(--color-acento-rosa);
+  font-weight: bold;
+}
+
+/* ===== Botones generales ===== */
+.btn-custom {
+  background-color: var(--color-acento-rosa);
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color .3s;
+}
+
+.btn-custom:hover {
+  background-color: var(--color-acento-choco);
+}
+
+/* ===== Cards y productos ===== */
+.card-img-top {
+  cursor: zoom-in;
+  object-fit: cover;
+  height: 260px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+@media (min-width: 992px) {
+  .card-img-top {
+    height: 300px;
+  }
+}
+
+/* ===== Filtros ===== */
+.btn-filtro {
+  background-color: #FFC0CB;
+  border: 2px solid #EAAFC0;
+  color: #5D4037;
+  border-radius: 8px;
+  padding: 6px 14px;
+  transition: all .2s ease;
+}
+
+.btn-filtro:hover {
+  background-color: #EAAFC0;
+  border-color: #EAAFC0;
+  color: #fff;
+}
+
+.btn-filtro.active {
+  background-color: #8B4513;
+  border-color: #8B4513;
+  color: #fff;
+}
+
+/* ===== Footer ===== */
+footer {
+  background-color: var(--color-acento-choco);
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-top: 40px;
+}
+
+/* ===== Otros elementos ===== */
+ul {
+  margin-left: 20px;
+}
+
+/* modal */
+.modal-backdrop.show {
+  background-color: rgba(0,0,0,.25);
+}
+
+.modal-producto {
+  background: #fff;
+}
+
+.img-ampliada {
+  max-height: 50vh;
+  max-width: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+  background: #e0b290;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.btn-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: .25rem .6rem;
+  border-radius: 999px;
+  opacity: .9;
+  box-shadow: 0 2px 10px rgba(0,0,0,.15);
+  z-index: 10;
+}
+
+.btn-nav:active {
+  transform: translateY(-50%) scale(.98);
+}
+
+
+/* =========================
+   ADMIN THEME — Mil Sabores
+   ========================= */
+:root{
+  --rosa:#ffc0cb;
+  --rosa-2:#eab0bf;
+  --cafe:#5d4037;
+  --cafe-2:#4b3a35;
+  --crema:#fff5e1;
+  --crema-2:#faf8f6;
+  --borde:#f0d9b8;
+  --gris:#7c6a64;
+}
+
+/* Fondo general suave */
+body{ background: var(--crema-2); }
+
+/* ---------- Shell / Layout ---------- */
+.admin-shell .topbar{
+  background:#fff;
+  border-bottom:1px solid #eee;
+  padding:10px 16px;
+}
+.badge-demo{
+  background:var(--crema);
+  border:1px solid var(--borde);
+  color:var(--cafe);
+  font-weight:600;
+}
+
+.admin-shell .layout{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  min-height:calc(100vh - 56px);
+}
+
+.admin-shell .sidebar{
+  background:#fff;
+  border-right:1px solid #eee;
+  padding:18px 14px;
+  position:sticky; top:0; height:calc(100vh - 56px);
+}
+
+.admin-shell .content{
+  padding:18px;
+}
+
+/* ---------- Sidebar ---------- */
+.brand{
+  font-weight:800; color:var(--cafe); font-size:1.1rem; margin-bottom:12px;
+}
+.brand small{ display:block; color:#85726b; font-weight:600; }
+
+.nav-admin .nav-link{
+  color:#4b3a35;
+  border-radius:10px;
+  padding:8px 10px;
+  transition:all .15s ease-in-out;
+}
+.nav-admin .nav-link:hover{ background:#f7f2ef; }
+.nav-admin .nav-link.active{
+  background:var(--rosa);
+  color:var(--cafe);
+  font-weight:700;
+}
+.nav-admin .group-title{
+  font-size:.78rem; text-transform:uppercase; color:#85726b;
+  margin:14px 0 6px;
+}
+
+/* ---------- Cards / Stats ---------- */
+.card-soft{
+  border-radius:14px;
+  border:1px solid #eee;
+  background:#fff;
+  box-shadow:0 3px 8px rgba(93,64,55,.05);
+}
+.stat{ display:flex; gap:10px; align-items:center; }
+.stat .num{ font-size:1.6rem; font-weight:800; color:#333; }
+
+/* ---------- Botones ---------- */
+.btn-rosa{
+  background:var(--rosa);
+  color:var(--cafe);
+  font-weight:700;
+  border:none;
+}
+.btn-rosa:hover{ background:var(--rosa-2); color:var(--cafe); }
+.btn-outline-secondary{ color:var(--cafe-2); border-color:#ddd; }
+
+/* ---------- Tablas ---------- */
+.table thead th{
+  white-space:nowrap;
+  color:var(--cafe-2);
+  border-bottom:1px solid #eee !important;
+}
+.table tbody td{ vertical-align:middle; }
+.table-hover tbody tr:hover{ background:#fffafc; } /* toque rosita */
+.table img{
+  border:1px solid #eee; border-radius:6px;
+  width:54px; height:40px; object-fit:cover;
+}
+
+/* ---------- Formularios ---------- */
+.form-label{ color:var(--cafe-2); font-weight:600; }
+.form-hint{ font-size:.85rem; color:#6c757d; }
+.form-control, .form-select{
+  border-radius:10px; border-color:#e9e1dc;
+}
+.form-control:focus, .form-select:focus{
+  border-color:var(--rosa-2);
+  box-shadow:0 0 0 .2rem rgba(234,176,191,.25);
+}
+
+/* ---------- Badges ---------- */
+.badge-rol{
+  background:var(--crema);
+  border:1px solid var(--borde);
+  color:var(--cafe);
+  font-weight:600;
+}
+
+/* ---------- Utilidades ---------- */
+.text-chocolate{ color:var(--cafe); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 992px){
+  .admin-shell .layout{ grid-template-columns:1fr; }
+  .admin-shell .sidebar{ position:static; height:auto; }
+}
